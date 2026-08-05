@@ -1,0 +1,10 @@
+/env
+/data/raw/
+
+# Ignore python cache folders in any directory
+**/__pycache__/
+
+# Ignore compiled python bytecode files
+*.pyc
+*.pyo
+*.pyd
