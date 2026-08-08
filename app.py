@@ -6,5 +6,5 @@ from etl.loaders.AccountLoader import account_loader
 
 # entity_loader.run_etl()
 
-# account_loader.run_etl()
+account_loader.run_etl()
 
