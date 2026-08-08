@@ -7,12 +7,12 @@ class BaseLoader(Validate):
   def __init__(self,path):
     self.path = path
     self.table = pd.DataFrame()
-  def extract_and_validate_columns(self,column_list, column_rules):
+  def extract_and_validate_columns(self):
       try:
         df = pd.read_csv(self.path)
-        self.table = df[column_list].drop_duplicates().reset_index(drop=True)
-        success_log(f"Extracted {column_list} from {self.path}")
-        self.validate_data(self.table,column_rules)
+        self.table = df[self.column_list].drop_duplicates().reset_index(drop=True)
+        success_log(f"Extracted {self.column_list} from {self.path}")
+        self.validate_data(self.table,self.column_rules)
       except FileNotFoundError:
         error_log("Error: The CSV file not found.")
 
@@ -25,10 +25,10 @@ class BaseLoader(Validate):
       except Exception as e:
         error_log(f"An unexpected error occurred: {e}")
 
-  def load_database(self,table_data):
+  def load_database(self):
     conn = DatabaseConnection.get_connection()
-    table_name = table_data["name"]
-    table_mappper = table_data["mapper"]
+    table_name = self.table_data["name"]
+    table_mappper = self.table_data["mapper"]
     table_column_list = []
     dataframe_column_list = []
     for key, value in table_mappper.items():
@@ -47,6 +47,6 @@ class BaseLoader(Validate):
       conn.rollback()
       error_log(f"Failed to load data into {table_name}: {e}")
   
-  def run_etl(self,column_list,column_rules,table_data):
-    self.extract_and_validate_columns(column_list,column_rules)
-    self.load_database(table_data)
+  def run_etl(self):
+    self.extract_and_validate_columns()
+    self.load_database()

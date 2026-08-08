@@ -1,14 +1,10 @@
-from etl.loaders.BankLoader import BankLoader
+# from etl.loaders.BankLoader import bank_loader
+# from etl.loaders.EntityLoader import entity_loader
+from etl.loaders.AccountLoader import account_loader
 
-column_list = ["Bank ID","Bank Name"]
-column_rules = {"Bank ID":"unique required","Bank Name":"required"}
-table_data = {
-  "name":"banks",
-  "mapper":{
-    "bank_id":"Bank ID",
-    "bank_name":"Bank Name"
-  }
-}
+# bank_loader.run_etl()
 
-bank_loader = BankLoader()
-bank_loader.run_etl(column_list,column_rules,table_data)
+# entity_loader.run_etl()
+
+# account_loader.run_etl()
+
